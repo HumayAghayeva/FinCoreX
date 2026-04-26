@@ -54,20 +54,7 @@ public class AccountAggregate extends AggregateRoot {
         this.balance += event.getAmount();
     }
 
-    public void withdrawFunds(double amount) {
-        if (!this.active) {
-            throw new IllegalStateException("Funds cannot be withdrawn from a closed account!");
-        }
-        raiseEvent(FundsWithdrawnEvent.builder()
-                .id(this.id)
-                .amount(amount)
-                .build());
-    }
 
-    public void apply(FundsWithdrawnEvent event) {
-        this.id = event.getId();
-        this.balance -= event.getAmount();
-    }
 
     public void closeAccount() {
         if (!this.active) {
